@@ -1,26 +1,80 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  background: var(--color-base-white-2);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply text-neutral-900 font-sans;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --color-black: #000008;
+  --color-white: #ffffff;
+
+  --color-base-white-2: #1a1a1a;
+  --color-base-white: #262626;
+
+  /* Gray */
+  --color-gray-50: #222327;
+  --color-gray-200: #383b42;
+  --color-gray-400: #616674;
+
+  /* Zinc */
+  --color-zinc-700: #3c4043;
+
+  /* Neutral */
+  --color-neutral-500: #b0b0b0;
+  --color-neutral-600: #e7e7e7;
+  --color-neutral-900: #fcfcfc;
+
+  /* Primary */
+  --color-primary-500: #f29145;
+  --color-primary-600: #f7b87a;
+  --color-primary-800: #fdedd7;
+
+  /* Blue */
+  --color-blue-500: #4285f4;
+  --color-blue-700: #1434cb;
+  --color-blue-900: #253b80;
+
+  /* Sky */
+  --color-sky-500: #179bd7;
+
+  /* Green */
+  --color-green-600: #34a853;
+
+  /* Red */
+  --color-red-500: #e94235;
+  --color-red-600: #eb001b;
+
+  /* Amber */
+  --color-amber-500: #f79e1b;
+
+  /* Yellow */
+  --color-yellow-500: #fabb05;
+
+  /* Orange */
+  --color-orange-50: #e5610a;
+  --color-orange-600: #ff5f00;
+
+  /* Danger */
+  --color-danger-50: #fef2f2;
+  --color-danger-300: #dc2626;
+  --color-danger-500: #f87171;
+  --color-danger-800: #7f1d1d;
+
+  /* Success */
+  --color-success-50: #295b40;
+  --color-success-400: #22c55e;
+  --color-success-500: #4ade80;
+  --color-success-600: #86efad;
+  --color-success-800: #dcfce8;
+
+  /* Success */
+  --color-warning-50: #fef9e8;
+  --color-warning-800: #85680e;
 }

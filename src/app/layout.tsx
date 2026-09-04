@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Footer } from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
+import { SessionProvider } from "next-auth/react";
+import { CartProvider } from "@/context/CartContext";
+import Main from "@/components/layout/Main";
+import { NotificationProvider } from "@/context/NotificationContext";
+import { NotificationStack } from "@/components/ui/Notification";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +30,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex flex-col w-full max-w-[1440px] mx-auto items-center justify-center">
+        <SessionProvider>
+          <NotificationProvider>
+            <CartProvider>
+              <Header />
+              <NotificationStack />
+              <Main>{children}</Main>
+              <Footer />
+            </CartProvider>
+          </NotificationProvider>
+        </SessionProvider>
+      </body>
     </html>
   );
 }
