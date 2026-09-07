@@ -11,6 +11,7 @@ export async function getCartByUserId(userId: string) {
           id: true,
           quantity: true,
           note: true,
+          productProtectionSelected: true,
           product: {
             select: {
               id: true,
@@ -206,7 +207,11 @@ export async function addProductToCart(
 export async function updateCartItem(
   userId: string,
   itemId: string,
-  updates: { quantity?: number; note?: string },
+  updates: {
+    quantity?: number;
+    note?: string;
+    productProtectionSelected?: boolean;
+  },
 ) {
   const item = await prisma.cartItem.findUnique({
     where: { id: itemId },
@@ -251,6 +256,9 @@ export async function updateCartItem(
     data: {
       ...(updates.quantity !== undefined && { quantity: updates.quantity }),
       ...(updates.note !== undefined && { note: updates.note }),
+      ...(updates.productProtectionSelected !== undefined && {
+        productProtectionSelected: updates.productProtectionSelected,
+      }),
     },
   });
 

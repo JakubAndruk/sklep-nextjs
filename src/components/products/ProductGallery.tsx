@@ -23,18 +23,17 @@ export function ProductGallery({
 
   return (
     <div className="flex flex-col justify-start items-start gap-8">
-      <div className="w-96 h-80 p-3 bg-base-white rounded-md outline-1 outline-offset-[-1px] outline-gray-200 flex flex-col justify-start items-start gap-2.5">
+      <div className="w-[clamp(280px,90vw,422px)] h-[296px] p-3 bg-base-white rounded-md outline-1 outline-offset-[-1px] outline-gray-200 flex flex-col justify-start items-start gap-2.5">
         <Image
           width={360}
           height={296}
-          className="self-stretch flex-1 rounded-md object-cover"
+          className="w-full h-full rounded-md object-contain bg-neutral-900"
           src={activeImage}
           alt={name}
         />
       </div>
-
       {gallery.length > 1 && (
-        <div className="flex justify-start items-start gap-4">
+        <div className="flex flex-wrap justify-start items-start gap-4">
           {gallery.map((url, index) => (
             <button
               key={url}
@@ -44,8 +43,8 @@ export function ProductGallery({
               aria-pressed={activeImage === url}
               className={`w-32 h-24 rounded-md overflow-hidden ${
                 activeImage === url
-                  ? "border-2 border-primary-500"
-                  : "border-2 border-transparent"
+                  ? "border-2 border-primary-500 bg-neutral-900 "
+                  : "border-2 border-transparent bg-neutral-500"
               }`}
             >
               <Image

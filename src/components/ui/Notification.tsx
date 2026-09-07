@@ -5,6 +5,9 @@ import {
   type Notification,
   type NotificationType,
 } from "@/context/NotificationContext";
+import { PlusIcon } from "../icons/PlusIcon";
+import { ErrorCircleIcon } from "../icons/ErrorCircleIcon";
+import { CheckmarkBadge } from "../icons/CheckmarkBadge";
 
 const typeStyles: Record<
   NotificationType,
@@ -16,8 +19,8 @@ const typeStyles: Record<
     icon: "text-success-600",
   },
   error: {
-    bg: "bg-danger-50",
-    outline: "outline-danger-400",
+    bg: "bg-danger-400",
+    outline: "outline-danger-600",
     icon: "text-danger-600",
   },
   warning: {
@@ -33,60 +36,15 @@ const typeStyles: Record<
 };
 
 function SuccessIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
-      <path
-        d="M8 12.5l2.5 2.5L16 9.5"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+  return <CheckmarkBadge className={className} />;
 }
 
 function ErrorIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
-      <path
-        d="M12 8v5M12 16h.01"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
+  return <ErrorCircleIcon className={className} />;
 }
 
 function CloseIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-    >
-      <path
-        d="M6 6l12 12M18 6L6 18"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
+  return <PlusIcon className={`${className} rotate-45`} />;
 }
 
 const icons: Record<NotificationType, typeof SuccessIcon> = {
@@ -104,7 +62,7 @@ function NotificationItem({ notification }: { notification: Notification }) {
   return (
     <div
       role="alert"
-      className={`self-stretch p-4 ${style.bg} rounded-md outline outline-1 outline-offset-[-1px] ${style.outline} flex justify-start items-start gap-4`}
+      className={`self-stretch p-4 ${style.bg} rounded-md outline -outline-offset-1 ${style.outline} flex justify-start items-start gap-4`}
     >
       <div className="size-7 relative shrink-0">
         <Icon

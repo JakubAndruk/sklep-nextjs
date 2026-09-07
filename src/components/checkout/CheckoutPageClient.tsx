@@ -8,10 +8,11 @@ import { createOrderClient } from "@/lib/api/orders-client";
 import { useNotification } from "@/context/NotificationContext";
 import { useCart } from "@/context/CartContext";
 import { CheckoutOrderItems } from "./CheckoutOrderItems";
-import { AddressSelector, type Address } from "./AddressSelector";
+import { AddressSelector } from "./AddressSelector";
 import { ShippingCard } from "./ShippingCard";
 import { PaymentMethodCard } from "./PaymentMethodCard";
 import { CheckoutSummary } from "./CheckoutSummary";
+import { Address } from "@/lib/api/addresses-client";
 
 type PricingConfig = {
   shippingPrice: number;
@@ -42,7 +43,6 @@ export function CheckoutPageClient({
       initialAddresses[0]?.id ??
       null,
   );
-  const [withProductProtection, setWithProductProtection] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleAddressCreated = useCallback((address: Address) => {
@@ -84,15 +84,36 @@ export function CheckoutPageClient({
     [showNotification],
   );
 
+  const handleToggleProductProtection = useCallback(
+    async (itemId: string, selected: boolean) => {
+      try {
+        const updatedCart = await updateCartItem(itemId, {
+          productProtectionSelected: selected,
+        });
+        setItems(updatedCart.items);
+      } catch (err) {
+        const message =
+          err instanceof Error
+            ? err.message
+            : "Failed to update product protection";
+        showNotification("error", message);
+        throw err;
+      }
+    },
+    [showNotification],
+  );
+
   const totals = useMemo(() => {
     const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
     const productsAmount = items.reduce(
       (sum, item) => sum + item.product.price * item.quantity,
       0,
     );
-    const productProtection = withProductProtection
-      ? pricing.productProtectionPerUnit * itemCount
-      : 0;
+
+    const productProtection = items.reduce((sum, item) => {
+      if (!item.productProtectionSelected) return sum;
+      return sum + pricing.productProtectionPerUnit * item.quantity;
+    }, 0);
     const shippingInsurance = productsAmount * pricing.shippingInsuranceRate;
     const totalAmount =
       productsAmount +
@@ -108,7 +129,7 @@ export function CheckoutPageClient({
       shippingInsurance,
       totalAmount,
     };
-  }, [items, pricing, withProductProtection]);
+  }, [items, pricing]);
 
   const handlePayNow = useCallback(async () => {
     if (!selectedAddressId || isSubmitting) return;
@@ -118,11 +139,9 @@ export function CheckoutPageClient({
       const { orderId } = await createOrderClient({
         type: "existing",
         addressId: selectedAddressId,
-        withProductProtection,
       });
 
       await refreshCart();
-
       router.push(`/orders/${orderId}`);
     } catch (err) {
       const message =
@@ -130,14 +149,7 @@ export function CheckoutPageClient({
       showNotification("error", message);
       setIsSubmitting(false);
     }
-  }, [
-    selectedAddressId,
-    isSubmitting,
-    withProductProtection,
-    router,
-    showNotification,
-    refreshCart,
-  ]);
+  }, [selectedAddressId, isSubmitting, router, showNotification, refreshCart]);
 
   if (items.length === 0) {
     return (
@@ -150,15 +162,14 @@ export function CheckoutPageClient({
   }
 
   return (
-    <div className="w-full p-10 flex justify-start items-start gap-12">
+    <div className="w-full p-2 xs:p-10 flex  flex-wrap justify-start items-start gap-12">
       <div className="flex-1 flex flex-col justify-start items-start gap-10">
         <CheckoutOrderItems
           items={items}
-          productProtectionTotal={totals.productProtection}
-          withProductProtection={withProductProtection}
-          onToggleProductProtection={() => setWithProductProtection((v) => !v)}
+          productProtectionUnitPrice={pricing.productProtectionPerUnit}
           onChangeQuantity={handleChangeQuantity}
           onSaveNote={handleSaveNote}
+          onToggleProductProtection={handleToggleProductProtection}
         />
 
         <AddressSelector

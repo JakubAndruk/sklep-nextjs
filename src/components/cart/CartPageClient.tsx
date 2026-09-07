@@ -74,7 +74,7 @@ export function CartPageClient() {
 
   if (cart.items.length === 0) {
     return (
-      <div className="w-full p-10 flex flex-col justify-center items-center gap-4">
+      <div className="w-full p-10 flex flex-col  justify-center items-center gap-4">
         <p className="text-neutral-600 text-lg font-medium">
           Your cart is empty.
         </p>
@@ -89,15 +89,15 @@ export function CartPageClient() {
   }
 
   return (
-    <div className="self-stretch p-10 flex justify-start items-start gap-12">
-      <div className="flex-1 flex flex-col justify-start items-start gap-8">
+    <div className="self-stretch px-2 xs-px-10 py-10 flex flex-wrap justify-start items-start gap-12">
+      <div className="flex-1 flex flex-col  justify-start items-start gap-8">
         <CheckboxSquare
           checked={allSelected}
           onChange={toggleSelectAll}
           label="Select All"
         />
 
-        <div className="self-stretch flex flex-col justify-start items-start gap-6">
+        <div className="self-stretch flex flex-col flex-wrap justify-start items-start gap-6">
           {cart.items.map((item) => (
             <CartItemRow
               key={item.id}

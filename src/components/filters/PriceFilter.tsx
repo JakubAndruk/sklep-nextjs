@@ -24,7 +24,7 @@ function PriceInput({
   return (
     <div className="self-stretch flex justify-start items-start">
       <div
-        className={`flex-1 px-4 py-3.5 bg-base-white rounded-tl-md rounded-bl-md outline-1 outline-offset-[-0.5px] flex justify-start items-center gap-2.5 ${
+        className={`flex-1 px-0 xs:px-4 py-3.5 bg-base-white rounded-tl-md rounded-bl-md outline-1 outline-offset-[-0.5px] flex justify-start items-center gap-2.5 ${
           hasError ? "outline-danger-300" : "outline-gray-400"
         }`}
       >

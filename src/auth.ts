@@ -1,6 +1,6 @@
 import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { getUserByEmail, getUserByPhoneNumber } from "./lib/db/users";
 import { checkRateLimit, resetRateLimit } from "./lib/utils/rateLimit";
 
@@ -12,6 +12,7 @@ class TooManyAttemptsError extends CredentialsSignin {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },
   providers: [

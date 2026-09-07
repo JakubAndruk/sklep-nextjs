@@ -28,9 +28,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scrollbar-gutter-stable`}
     >
-      <body className="flex flex-col w-full max-w-[1440px] mx-auto items-center justify-center">
+      <body className="flex flex-col w-full max-w-360 mx-auto items-center justify-center">
         <SessionProvider>
           <NotificationProvider>
             <CartProvider>

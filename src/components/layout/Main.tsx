@@ -1,6 +1,12 @@
-export default function Main({ children }) {
+import { ReactNode } from "react";
+
+type MainProps = {
+  children: ReactNode;
+};
+
+export default function Main({ children }: MainProps) {
   return (
-    <div className="w-full max-w-[1440px] mx-auto flex grow items-center justify-center">
+    <div className="w-full max-w-360 mx-auto flex grow items-center justify-center">
       {children}
     </div>
   );

@@ -1,6 +1,4 @@
-type IconProps = {
-  className?: string;
-};
+import { IconProps } from "@/types/icons";
 
 export function MouseIcon({ className = "" }: IconProps) {
   return (

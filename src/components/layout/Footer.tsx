@@ -1,5 +1,5 @@
 import { Logo } from "@/components/ui/Logo";
-import { NavLink } from "@/components/ui/NavLink";
+import { InactiveClassName } from "@/components/ui/NavLink";
 import Link from "next/link";
 import { PaymentMethodIcon } from "../ui/PaymentMethodIcon";
 import { paymentMethods } from "@/lib/constants/paymentMethods";
@@ -11,7 +11,7 @@ type FooterLink = {
 
 type FooterSection = {
   title: string;
-  links: FooterLink;
+  links: FooterLink[];
 };
 
 const footerSections: FooterSection[] = [
@@ -52,11 +52,6 @@ const footerSections: FooterSection[] = [
   },
 ];
 
-const FOOTER_LINK_ACTIVE_CLASS =
-  "self-stretch text-primary-500 text-base font-semibold font-['Inter'] leading-6";
-const FOOTER_LINK_INACTIVE_CLASS =
-  "self-stretch text-neutral-600 text-base font-medium font-['Inter'] leading-6 hover:text-neutral-900 transition-colors";
-
 function isExternalLink(href: string) {
   return href.startsWith("http");
 }
@@ -75,18 +70,14 @@ function FooterColumn({ title, links }: FooterSection) {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className={FOOTER_LINK_INACTIVE_CLASS}
+              className={InactiveClassName}
             >
               {label}
             </Link>
           ) : (
-            <NavLink
-              key={label}
-              href={href}
-              inactiveClassName={FOOTER_LINK_INACTIVE_CLASS}
-            >
+            <Link key={label} href={href} className={InactiveClassName}>
               {label}
-            </NavLink>
+            </Link>
           ),
         )}
       </div>
@@ -98,9 +89,9 @@ export function Footer() {
   return (
     <footer
       data-screen="Website"
-      className="w-full max-w-[1440px] mx-auto px-15 py-35 bg-gray-50 flex flex-wrap justify-between items-start gap-12"
+      className="w-full max-w-360 mx-auto px-2 xxs:px-10 xs:px-15 py-35 bg-gray-50 flex flex-wrap justify-between items-start gap-12"
     >
-      <div className="flex-1 min-w-[280px] self-stretch flex flex-col justify-start items-start gap-6">
+      <div className="flex-1 min-w-70 self-stretch flex flex-col justify-start items-start gap-6">
         <Logo />
 
         <div className="w-56 text-neutral-600 text-base font-medium font-['Inter'] leading-6">
@@ -113,7 +104,7 @@ export function Footer() {
             <PaymentMethodIcon
               key={method.name}
               name={method.name}
-              src={method.src}
+              Icon={method.Icon}
             />
           ))}
         </div>

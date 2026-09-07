@@ -35,6 +35,7 @@ export const updateCartItemSchema = z.object({
     .positive({ message: "Quantity must be positive" })
     .optional(),
   note: z.string().max(280, { message: "Note is too long" }).optional(),
+  productProtectionSelected: z.boolean().optional(),
 });
 
 export type UpdateCartItemInput = z.infer<typeof updateCartItemSchema>;

@@ -2,7 +2,7 @@
 
 import { useState, useCallback, MouseEvent } from "react";
 import { useCart } from "@/context/CartContext";
-import { CartIcon } from "../icons/CartIcon";
+import { CartIcon } from "@/components/icons/CartIcon";
 
 type AddToCartButtonProps = {
   productId: string;
@@ -44,7 +44,7 @@ export function AddToCartButton({
         type="button"
         onClick={handleClick}
         disabled={isLoading}
-        className={`w-full px-4 py-3 bg-primary-500 text-base-white rounded-md text-base font-semibold flex justify-center items-center gap-2 hover:opacity-90 transition-colors disabled:opacity-60 ${className}`}
+        className={`w-full px-4 py-3 bg-primary-500 rounded-md text-base font-semibold flex justify-center items-center gap-2 hover:opacity-90 transition-colors disabled:opacity-60 ${className}`}
       >
         {isLoading ? "Adding..." : "Add to cart"}
         <CartIcon className="size-6" />
@@ -58,9 +58,9 @@ export function AddToCartButton({
       onClick={handleClick}
       disabled={isLoading}
       aria-label="Add to cart"
-      className={`p-1 bg-base-white rounded-md flex justify-center items-center cursor-pointer hover:bg-base-white-2 transition-colors disabled:opacity-60 ${className}`}
+      className={`p-1 bg-base-white  rounded-md flex justify-center items-center cursor-pointer hover:bg-primary-500 transition-colors disabled:opacity-60 ${className}`}
     >
-      <CartIcon className="size-6 text-neutral-900" />
+      <CartIcon className="size-6 " />
     </button>
   );
 }

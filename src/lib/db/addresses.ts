@@ -66,7 +66,15 @@ export async function createAddress(userId: string, data: NewAddressInput) {
 export async function updateAddress(
   userId: string,
   addressId: string,
-  data: NewAddressInput,
+  data: {
+    name?: string;
+    street?: string;
+    city?: string;
+    province?: string;
+    postalCode?: string;
+    country?: string;
+    setAsDefault?: boolean;
+  },
 ) {
   const existing = await prisma.address.findUnique({
     where: { id: addressId },

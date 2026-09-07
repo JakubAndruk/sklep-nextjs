@@ -108,6 +108,7 @@ CREATE TABLE "CartItem" (
     "colorId" TEXT,
     "quantity" INTEGER NOT NULL DEFAULT 1,
     "note" TEXT,
+    "productProtectionSelected" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "CartItem_pkey" PRIMARY KEY ("id")
 );
@@ -119,7 +120,6 @@ CREATE TABLE "Order" (
     "status" "OrderStatus" NOT NULL DEFAULT 'PENDING',
     "productsAmount" DECIMAL(10,2) NOT NULL,
     "productProtection" DECIMAL(10,2) NOT NULL,
-    "productProtectionSelected" BOOLEAN NOT NULL DEFAULT true,
     "shippingPrice" DECIMAL(10,2) NOT NULL,
     "shippingInsurance" DECIMAL(10,2) NOT NULL,
     "serviceFee" DECIMAL(10,2) NOT NULL,
@@ -143,6 +143,7 @@ CREATE TABLE "OrderItem" (
     "colorId" TEXT,
     "quantity" INTEGER NOT NULL,
     "priceAtPurchase" DECIMAL(10,2) NOT NULL,
+    "productProtectionSelected" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "OrderItem_pkey" PRIMARY KEY ("id")
 );

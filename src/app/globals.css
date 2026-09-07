@@ -11,6 +11,9 @@
 }
 
 @theme inline {
+  --breakpoint-xxs: 22rem; /* 360px */
+  --breakpoint-xs: 30rem; /* 480px */
+
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --color-black: #000008;
   --color-white: #ffffff;
@@ -64,7 +67,9 @@
   /* Danger */
   --color-danger-50: #fef2f2;
   --color-danger-300: #dc2626;
+  --color-danger-400: #ef4444;
   --color-danger-500: #f87171;
+  --color-danger-600: #fca5a5;
   --color-danger-800: #7f1d1d;
 
   /* Success */

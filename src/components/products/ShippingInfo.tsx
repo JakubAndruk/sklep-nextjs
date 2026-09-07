@@ -15,7 +15,7 @@ export function ShippingInfo({ estimatedDelivery }: ShippingInfoProps) {
       <div className="text-neutral-500 text-lg font-medium leading-7">
         Shipping Available
       </div>
-      <div className="w-80 p-4 rounded-md outline-1 outline-offset-[-1px] outline-neutral-900 flex justify-start items-start gap-2">
+      <div className="w-[clamp(280px,90vw,312px)] p-4 rounded-md outline-1 outline-offset-[-1px] outline-neutral-900 flex justify-start items-start gap-2">
         <ShieledCrossIcon className="size-6" />
         <div className="flex-1 flex flex-col justify-start items-start gap-1">
           <div className="self-stretch text-neutral-900 text-base font-medium leading-6">

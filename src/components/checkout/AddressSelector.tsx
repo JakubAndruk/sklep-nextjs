@@ -1,20 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { createAddress } from "@/lib/api/addresses-client";
+import { Address, createAddress } from "@/lib/api/addresses-client";
 import { useNotification } from "@/context/NotificationContext";
-import { NewAddressForm, type NewAddressFormValues } from "./NewAddressForm";
-
-export type Address = {
-  id: string;
-  name: string;
-  street: string;
-  city: string;
-  province: string;
-  postalCode: string;
-  country: string;
-  isDefault: boolean;
-};
+import { NewAddressForm, NewAddressFormValues } from "../forms/NewAddressForm";
 
 type AddressSelectorProps = {
   addresses: Address[];
@@ -68,8 +57,8 @@ export function AddressSelector({
         Address
       </div>
 
-      <div className="self-stretch p-6 bg-base-white rounded-md outline-1 outline-offset-[-1px] outline-gray-200 flex flex-col justify-start items-start gap-8">
-        <div className="self-stretch flex justify-start items-start">
+      <div className="self-stretch p-2 xs:p-6 bg-base-white rounded-md outline-1 -outline-offset-1 outline-gray-200 flex flex-col justify-start items-start gap-8">
+        <div className="self-stretch flex flex-wrap justify-start items-start">
           <button
             type="button"
             onClick={() => setActiveTab("existing")}
@@ -85,7 +74,7 @@ export function AddressSelector({
               Existing Address
             </span>
             <div
-              className={`self-stretch h-0 outline-offset-[-1px] ${
+              className={`self-stretch h-0 -outline-offset-1 ${
                 activeTab === "existing"
                   ? "outline-2 outline-primary-500"
                   : "outline-1 outline-gray-200"
@@ -108,7 +97,7 @@ export function AddressSelector({
               New Address
             </span>
             <div
-              className={`self-stretch h-0 outline-offset-[-1px] ${
+              className={`self-stretch h-0 -outline-offset-1 ${
                 activeTab === "new"
                   ? "outline-2 outline-primary-500"
                   : "outline-1 outline-gray-200"
@@ -130,14 +119,14 @@ export function AddressSelector({
                   key={address.id}
                   type="button"
                   onClick={() => onSelectAddress(address.id)}
-                  className={`self-stretch p-4 rounded-md outline-1 outline-offset-[-1px] flex flex-col justify-start items-start gap-4 text-left transition-colors ${
+                  className={`self-stretch p-4 rounded-md outline-1 -outline-offset-1 flex flex-col justify-start items-start gap-4 text-left transition-colors ${
                     selectedAddressId === address.id
                       ? "outline-primary-500 bg-primary-50"
                       : "outline-gray-200 hover:bg-gray-50"
                   }`}
                 >
                   <div className="self-stretch flex flex-col justify-start items-start gap-3">
-                    <div className="flex justify-start items-center gap-4">
+                    <div className="flex  justify-start items-center gap-4">
                       <span className="text-neutral-600 text-base font-medium leading-6">
                         Address
                       </span>
@@ -152,7 +141,7 @@ export function AddressSelector({
                     </div>
                   </div>
 
-                  <div className="self-stretch flex justify-between items-start">
+                  <div className="self-stretch flex flex-wrap justify-between items-start gap-2">
                     <div className="flex flex-col justify-start items-start gap-2">
                       <span className="text-neutral-600 text-base font-medium leading-6">
                         Country

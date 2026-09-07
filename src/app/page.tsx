@@ -12,15 +12,12 @@ export default async function Home() {
     getRecommendedProducts(),
     getBrands(),
   ]);
-
   return (
-    <div className="w-full px-10 pb-20 flex flex-col justify-start items-start gap-24">
+    <div className="w-full px-2 xs:px-4 sm:px-10 pb-20 flex flex-col justify-start items-start gap-24">
       <HeroSection categories={categories} />
 
       <CategoryGrid categories={categories} />
-
       <RecommendationSection products={recommendedProducts} />
-
       <BrandGrid brands={brands} />
     </div>
   );

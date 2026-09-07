@@ -1,4 +1,4 @@
-import { Prisma } from "@/generated/prisma/client";
+import { OrderStatus, Prisma } from "@/generated/prisma/client";
 import prisma from "@/lib/db/prisma";
 import { createAddress } from "@/lib/db/addresses";
 import type { CreateOrderInput } from "@/lib/validators/orders";
@@ -20,7 +20,6 @@ const orderDetailSelect = {
   status: true,
   productsAmount: true,
   productProtection: true,
-  productProtectionSelected: true,
   shippingPrice: true,
   shippingInsurance: true,
   serviceFee: true,
@@ -37,6 +36,7 @@ const orderDetailSelect = {
       id: true,
       quantity: true,
       priceAtPurchase: true,
+      productProtectionSelected: true,
       product: {
         select: {
           id: true,
@@ -54,6 +54,7 @@ type RawOrderItem = {
   id: string;
   quantity: number;
   priceAtPurchase: Prisma.Decimal;
+  productProtectionSelected: boolean;
   product: {
     id: string;
     name: string;
@@ -65,10 +66,9 @@ type RawOrderItem = {
 
 type RawOrder = {
   id: string;
-  status: string;
+  status: OrderStatus;
   productsAmount: Prisma.Decimal;
   productProtection: Prisma.Decimal;
-  productProtectionSelected: boolean;
   shippingPrice: Prisma.Decimal;
   shippingInsurance: Prisma.Decimal;
   serviceFee: Prisma.Decimal;
@@ -89,7 +89,6 @@ function serializeOrder(order: RawOrder) {
     status: order.status,
     productsAmount: Number(order.productsAmount),
     productProtection: Number(order.productProtection),
-    productProtectionSelected: order.productProtectionSelected,
     shippingPrice: Number(order.shippingPrice),
     shippingInsurance: Number(order.shippingInsurance),
     serviceFee: Number(order.serviceFee),
@@ -105,6 +104,7 @@ function serializeOrder(order: RawOrder) {
       id: item.id,
       quantity: item.quantity,
       priceAtPurchase: Number(item.priceAtPurchase),
+      productProtectionSelected: item.productProtectionSelected,
       product: item.product,
       color: item.color,
     })),
@@ -121,6 +121,7 @@ export async function createOrder(userId: string, input: CreateOrderInput) {
         select: {
           id: true,
           quantity: true,
+          productProtectionSelected: true,
           product: {
             select: { id: true, name: true, price: true, stock: true },
           },
@@ -194,9 +195,12 @@ export async function createOrder(userId: string, input: CreateOrderInput) {
             return sum.plus(product.price.mul(item.quantity));
           }, new Prisma.Decimal(0));
 
-          const productProtection = input.withProductProtection
-            ? pricing.productProtectionPerUnit.mul(totalQuantity)
-            : new Prisma.Decimal(0);
+          const productProtection = cart.items.reduce((sum, item) => {
+            if (!item.productProtectionSelected) return sum;
+            return sum.plus(
+              pricing.productProtectionPerUnit.mul(item.quantity),
+            );
+          }, new Prisma.Decimal(0));
           const shippingInsurance = productsAmount.mul(
             pricing.shippingInsuranceRate,
           );
@@ -215,7 +219,6 @@ export async function createOrder(userId: string, input: CreateOrderInput) {
               status: "PAID",
               productsAmount,
               productProtection,
-              productProtectionSelected: input.withProductProtection,
               shippingPrice,
               shippingInsurance,
               serviceFee,
@@ -236,6 +239,7 @@ export async function createOrder(userId: string, input: CreateOrderInput) {
               productId: item.product.id,
               quantity: item.quantity,
               priceAtPurchase: product.price,
+              productProtectionSelected: item.productProtectionSelected,
             };
           });
 

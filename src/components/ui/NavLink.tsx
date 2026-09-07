@@ -11,16 +11,13 @@ export function isPathActive(pathname: string, href: string) {
 type NavLinkProps = {
   href: string;
   children: ReactNode;
-  activeClassName: string;
-  inactiveClassName: string;
 };
+export const ActiveClassName =
+  "text-primary-500 text-base font-semibold font-['Inter'] leading-6";
+export const InactiveClassName =
+  "text-neutral-500 text-base font-medium font-['Inter'] leading-6 hover:text-primary-500 transition-colors";
 
-export function NavLink({
-  href,
-  children,
-  activeClassName,
-  inactiveClassName,
-}: NavLinkProps) {
+export function NavLink({ href, children }: NavLinkProps) {
   const pathname = usePathname();
   const isActive = isPathActive(pathname, href);
 
@@ -28,7 +25,7 @@ export function NavLink({
     <Link
       href={href}
       aria-current={isActive ? "page" : undefined}
-      className={isActive ? activeClassName : inactiveClassName}
+      className={isActive ? ActiveClassName : InactiveClassName}
     >
       {children}
     </Link>

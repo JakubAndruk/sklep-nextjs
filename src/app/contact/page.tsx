@@ -1,3 +1,7 @@
 export default function Contact() {
-  return <div className="w-md flex items-center justify-center">Contact</div>;
+  return (
+    <div className="w-md flex items-center justify-center">
+      Contact placeholder
+    </div>
+  );
 }

@@ -22,7 +22,7 @@ export function ProfileSidebar({ email }: ProfileSidebarProps) {
   }, [isSigningOut]);
 
   return (
-    <div className="w-80 p-6 bg-base-white rounded-md outline-1 outline-offset-[-1px] outline-gray-200 flex flex-col justify-center items-start gap-6 shrink-0">
+    <div className="min-w-70 max-w-80 p-6 bg-base-white rounded-md outline-1 outline-offset-[-1px] outline-gray-200 flex flex-col justify-center items-start gap-6 shrink-0">
       <div className="self-stretch flex justify-start items-center gap-6">
         <UserAvatar email={email} size="lg" />
         <div className="flex-1 flex flex-col justify-center items-start gap-1">

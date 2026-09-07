@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { ApproveIcon } from "../icons/ApproveIcon";
+import { ChevronDownIcon } from "../icons/ChevronDownIcon";
 
 type Category = {
   id: string;
@@ -32,16 +34,8 @@ function CheckboxRow({
       className="flex justify-start items-center gap-4"
     >
       {checked ? (
-        <span className="size-6 p-[3px] bg-primary-500 rounded-md flex justify-center items-center">
-          <svg viewBox="0 0 16 16" fill="none" className="size-4">
-            <path
-              d="M3 8.5L6.5 12L13 4"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+        <span className="size-6 p-0.75 bg-primary-500 rounded-md flex justify-center items-center">
+          <ApproveIcon className="size-4 text-neutral-900" />
         </span>
       ) : (
         <span className="size-6 bg-gray-50 rounded-md border border-gray-400" />
@@ -76,19 +70,9 @@ export function CategoryFilter({
         <span className="text-neutral-900 text-xl font-semibold leading-8">
           Category
         </span>
-        <svg
-          viewBox="0 0 16 16"
-          fill="none"
+        <ChevronDownIcon
           className={`size-4 text-neutral-900 transition-transform ${open ? "rotate-180" : ""}`}
-        >
-          <path
-            d="M2 5l6 6 6-6"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        />
       </button>
 
       {open && (
@@ -116,19 +100,9 @@ export function CategoryFilter({
               <span className="text-neutral-600 text-base font-medium leading-6">
                 Load More
               </span>
-              <svg
-                viewBox="0 0 16 16"
-                fill="none"
-                className="size-2.5 text-neutral-600"
-              >
-                <path
-                  d="M2 5l6 6 6-6"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ChevronDownIcon
+                className={`size-4 text-neutral-900 transition-transform ${open ? "rotate-180" : ""}`}
+              />
             </button>
           )}
         </div>

@@ -1,12 +1,15 @@
-import Link from "next/link";
-import { CheckmarkBadge } from "@/components/ui/CheckmarkBadge";
+import { CheckmarkBadge } from "@/components/icons/CheckmarkBadge";
+import { formatDateLong, formatPrice } from "@/lib/utils/format";
+import Image from "next/image";
+import { ProductCaregoryBadge } from "../ui/ProductCategoryBadge";
+import { LinkButton } from "../ui/LinkButton";
+import { ApproveIcon } from "../icons/ApproveIcon";
 
 export type OrderDetail = {
   id: string;
   status: "PENDING" | "PAID" | "SHIPPED" | "DELIVERED" | "CANCELLED";
   productsAmount: number;
   productProtection: number;
-  productProtectionSelected: boolean;
   shippingPrice: number;
   shippingInsurance: number;
   serviceFee: number;
@@ -22,6 +25,7 @@ export type OrderDetail = {
     id: string;
     quantity: number;
     priceAtPurchase: number;
+    productProtectionSelected: boolean;
     product: {
       id: string;
       name: string;
@@ -31,19 +35,6 @@ export type OrderDetail = {
     color: { name: string; hexValue: string } | null;
   }[];
 };
-
-function formatPrice(value: number) {
-  return `$${value.toFixed(2)}`;
-}
-
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
 
 const STATUS_LABELS: Record<OrderDetail["status"], string> = {
   PENDING: "Pending",
@@ -72,9 +63,9 @@ export function OrderSummaryCard({ order }: OrderSummaryCardProps) {
   );
 
   return (
-    <div className="w-full max-w-[640px] p-6 bg-base-white rounded-md outline-1 outline-offset-[-1px] outline-gray-200 flex flex-col justify-center items-center gap-6">
+    <div className="w-full max-w-160 p-6 bg-base-white rounded-md outline-1 -outline-offset-1 outline-gray-200 flex flex-col justify-center items-center gap-6">
       <div className="flex flex-col justify-start items-center gap-6">
-        <CheckmarkBadge />
+        <CheckmarkBadge className="size-15 text-success-500 m-2.5" />
         <div className="text-center text-neutral-900 text-3xl font-medium leading-10">
           Thanks for Your Order!
         </div>
@@ -90,7 +81,7 @@ export function OrderSummaryCard({ order }: OrderSummaryCardProps) {
             Transaction Date
           </div>
           <div className="text-neutral-600 text-base font-medium leading-6">
-            {formatDate(order.createdAt)}
+            {formatDateLong(order.createdAt)}
           </div>
         </div>
 
@@ -129,12 +120,14 @@ export function OrderSummaryCard({ order }: OrderSummaryCardProps) {
             {order.items.map((item) => (
               <div
                 key={item.id}
-                className="self-stretch p-4 bg-base-white rounded-md outline-1 outline-offset-[-1px] outline-gray-200 flex flex-col justify-center items-start gap-6"
+                className="self-stretch p-4 bg-base-white rounded-md outline-1 -outline-offset-1 outline-gray-200 flex flex-col justify-center items-start gap-4"
               >
                 <div className="self-stretch flex justify-start items-center gap-8">
-                  <div className="w-44 h-36 p-3 rounded-md outline-1 outline-offset-[-1px] outline-gray-200 flex flex-col justify-start items-start gap-2.5">
-                    <img
-                      className="self-stretch flex-1 rounded-md object-cover"
+                  <div className="w-44 h-36 p-3 rounded-md outline-1 -outline-offset-1 outline-gray-200 flex flex-col justify-start items-start gap-2.5">
+                    <Image
+                      width={176}
+                      height={144}
+                      className="w-full h-full rounded-md object-contain bg-neutral-900"
                       src={item.product.imageUrl}
                       alt={item.product.name}
                     />
@@ -144,15 +137,12 @@ export function OrderSummaryCard({ order }: OrderSummaryCardProps) {
                       <div className="text-neutral-900 text-xl font-medium leading-8">
                         {item.product.name}
                       </div>
-                      <div className="px-2.5 py-1.5 bg-orange-50 rounded-md flex justify-center items-center gap-2.5">
-                        <span className="text-primary-800 text-sm font-medium leading-6">
-                          {item.product.category.name}
-                        </span>
-                      </div>
+                      <ProductCaregoryBadge name={item.product.category.name} />
+
                       {item.color && (
                         <div className="flex justify-start items-center gap-2">
                           <span
-                            className="size-4 rounded-full outline-1 outline-offset-[-1px] outline-gray-200"
+                            className="size-4 rounded-full outline-1 -outline-offset-1 outline-gray-200"
                             style={{ backgroundColor: item.color.hexValue }}
                             aria-hidden="true"
                           />
@@ -172,6 +162,16 @@ export function OrderSummaryCard({ order }: OrderSummaryCardProps) {
                     </div>
                   </div>
                 </div>
+
+                {item.productProtectionSelected && (
+                  <div className="self-stretch pl-1 flex items-center gap-2">
+                    <ApproveIcon className="size-4 text-primary-500 shrink-0" />
+
+                    <span className="text-neutral-600 text-sm font-medium leading-6">
+                      Product Protection included
+                    </span>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -185,7 +185,7 @@ export function OrderSummaryCard({ order }: OrderSummaryCardProps) {
               {formatPrice(order.productsAmount)}
             </span>
           </div>
-          {order.productProtectionSelected && (
+          {order.productProtection > 0 && (
             <div className="self-stretch flex justify-between items-center">
               <span className="text-neutral-600 text-base font-medium leading-6">
                 Total Product Protection
@@ -253,16 +253,7 @@ export function OrderSummaryCard({ order }: OrderSummaryCardProps) {
           </div>
         </div>
 
-        <div className="self-stretch flex flex-col justify-start items-start gap-6">
-          <Link
-            href="/products"
-            className="self-stretch px-5 py-3.5 bg-primary-500 rounded-md flex justify-center items-center gap-3.5 hover:opacity-90 transition-opacity"
-          >
-            <span className="text-base-white text-base font-medium leading-6">
-              Continue Shopping
-            </span>
-          </Link>
-        </div>
+        <LinkButton href="/products">Continue Shopping</LinkButton>
       </div>
     </div>
   );

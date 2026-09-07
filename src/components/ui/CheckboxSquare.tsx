@@ -1,3 +1,5 @@
+import { ApproveIcon } from "../icons/ApproveIcon";
+
 type CheckboxSquareProps = {
   checked: boolean;
   onChange: () => void;
@@ -20,16 +22,8 @@ export function CheckboxSquare({
       className="flex justify-start items-center gap-4"
     >
       {checked ? (
-        <span className="size-6 p-[3px] bg-primary-500 rounded-md flex justify-center items-center shrink-0">
-          <svg viewBox="0 0 16 16" fill="none" className="size-4">
-            <path
-              d="M3 8.5L6.5 12L13 4"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+        <span className="size-6 p-0.75 bg-primary-500 rounded-md flex justify-center items-center shrink-0">
+          <ApproveIcon className="size-4 text-base-white-2" />
         </span>
       ) : (
         <span className="size-6 bg-gray-50 rounded-md border border-gray-400 shrink-0" />

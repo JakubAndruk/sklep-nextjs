@@ -9,7 +9,7 @@ export function UserAvatar({ email, size = "lg" }: UserAvatarProps) {
 
   return (
     <div
-      className={`${sizeClass} rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-semibold shrink-0`}
+      className={`${sizeClass} rounded-full bg-neutral-900 hover:bg-primary-500 text-base-white-2 flex items-center justify-center font-semibold shrink-0`}
       aria-hidden="true"
     >
       {initial}

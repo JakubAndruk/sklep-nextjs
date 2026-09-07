@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { ChevronDownIcon } from "../icons/ChevronDownIcon";
 
 export type SelectOption = {
   value: string;
@@ -61,12 +62,8 @@ export function Select({
         <span className="truncate">
           {selected ? selected.label : placeholder}
         </span>
-        <Image
-          src="/icons/chevron-down.svg"
-          alt=""
-          width={24}
-          height={24}
-          className={`shrink-0 transition-transform ${open ? "rotate-180" : ""}`}
+        <ChevronDownIcon
+          className={`size-6 shrink-0 transition-transform ${open ? "rotate-180" : ""}`}
         />
       </button>
 
@@ -87,7 +84,7 @@ export function Select({
                   onChange(option.value);
                   setOpen(false);
                 }}
-                className={`w-full text-left px-4 py-3 text-base hover:bg-gray-50 transition-colors ${
+                className={`w-full text-left px-4 py-3 text-base hover:text-primary-500 transition-colors ${
                   option.value === value
                     ? "text-primary-500 font-medium"
                     : "text-neutral-900 font-normal"

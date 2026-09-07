@@ -25,16 +25,16 @@ export default async function ProfilePage() {
     <div className="w-full flex flex-col justify-start items-start gap-2">
       <Breadcrumb items={breadcrumbItems} />
 
-      <div className="self-stretch p-10 flex justify-start items-start gap-12">
+      <div className="self-stretch px-2 xxs:px-4 py-10 flex flex-wrap justify-start items-start gap-12">
         <ProfileSidebar email={email} />
 
         <div className="flex-1 flex flex-col justify-start items-start gap-8">
-          <div className="w-full max-w-[470px] flex justify-start items-start">
+          <div className="min-w-72.5 max-w-117.5 flex justify-start items-start">
             <div className="flex-1 flex flex-col justify-center items-center gap-3">
               <span className="text-primary-500 text-lg font-semibold leading-7">
-                Transaction
+                Transactions
               </span>
-              <div className="self-stretch h-0 outline-2 outline-offset-[-1px] outline-primary-500" />
+              <div className="self-stretch h-0 outline-2 -outline-offset-1 outline-primary-500" />
             </div>
           </div>
 

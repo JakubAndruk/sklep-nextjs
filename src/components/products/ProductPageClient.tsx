@@ -64,8 +64,8 @@ export function ProductsPageClient({
   );
 
   return (
-    <div className="w-full flex justify-start items-start gap-0.5">
-      <aside className="w-96 p-10 flex flex-col justify-start items-center gap-12 shrink-0">
+    <div className="w-full flex flex-wrap justify-start items-start gap-0.5">
+      <aside className="max-w-96 min-w-50 p-2 xs:p-10 flex flex-col flex-wrap justify-start items-center gap-12 shrink-0 md:sticky md:top-0 md:self-start">
         <CategoryFilter
           categories={categories}
           activeSlug={category}
@@ -83,7 +83,7 @@ export function ProductsPageClient({
 
       <div className="w-px self-stretch outline-1 outline-offset-[-0.5px] outline-gray-200" />
 
-      <div className="flex-1 p-10 flex flex-col justify-start items-start gap-12">
+      <div className="flex-1 p-2 xs:p-10 flex flex-col justify-start items-start gap-12">
         <div className="self-stretch flex flex-col justify-start items-start gap-10">
           <SortAndShow
             sort={sort}

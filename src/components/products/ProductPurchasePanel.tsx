@@ -1,8 +1,14 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { useCart } from "@/context/CartContext";
 import { CartIcon } from "../icons/CartIcon";
+import { formatPrice } from "@/lib/utils/format";
+import { Button } from "../ui/Button";
+import { useAsyncAction } from "@/hooks/useAsyncAction";
+import { ApproveIcon } from "../icons/ApproveIcon";
+import { PlusIcon } from "../icons/PlusIcon";
+import { MinusIcon } from "../icons/MinusIcon";
 
 export type ProductColor = {
   id: string;
@@ -18,10 +24,6 @@ type ProductPurchasePanelProps = {
   stock: number;
   colors: ProductColor[];
 };
-
-function formatPrice(value: number) {
-  return `$${value.toFixed(2)}`;
-}
 
 function getContrastColor(hex: unknown): string {
   if (typeof hex !== "string") return "#FFFFFF";
@@ -55,13 +57,8 @@ export function ProductPurchasePanel({
     getInitialColor(colors),
   );
   const [quantity, setQuantity] = useState(1);
-  const [isAdding, setIsAdding] = useState(false);
 
   const availableStock = selectedColor ? selectedColor.stock : stock;
-
-  useEffect(() => {
-    setQuantity((q) => Math.min(q, Math.max(availableStock, 1)));
-  }, [availableStock]);
 
   const decrease = useCallback(() => {
     setQuantity((q) => Math.max(1, q - 1));
@@ -73,24 +70,22 @@ export function ProductPurchasePanel({
 
   const handleSelectColor = useCallback((color: ProductColor) => {
     setSelectedColor(color);
+    setQuantity((q) => Math.min(q, Math.max(color.stock, 1)));
   }, []);
 
-  const handleAddToCart = useCallback(async () => {
-    if (isAdding) return;
-    setIsAdding(true);
-    try {
-      await addItem(productId, quantity, selectedColor?.id ?? null);
-    } catch {
-    } finally {
-      setIsAdding(false);
-    }
-  }, [addItem, productId, quantity, selectedColor, isAdding]);
+  const { run: runAddToCart, isLoading: isAdding } = useAsyncAction(addItem);
+
+  const handleAddToCart = useCallback(() => {
+    runAddToCart(productId, quantity, selectedColor?.id ?? null).catch(
+      () => {},
+    );
+  }, [runAddToCart, productId, quantity, selectedColor]);
 
   const subtotal = price * quantity;
   const isOutOfStock = availableStock === 0;
 
   return (
-    <div className="w-96 p-6 bg-base-white rounded-md outline-1 outline-offset-[-1px] outline-gray-200 flex flex-col justify-start items-start gap-8">
+    <div className="w-96 p-6 bg-base-white rounded-md outline-1 -outline-offset-1 outline-gray-200 flex flex-col justify-start items-start gap-8">
       {colors.length > 0 && (
         <div className="w-full flex flex-col justify-start items-start gap-3.5">
           <div className="text-neutral-500 text-lg font-medium leading-7">
@@ -112,22 +107,12 @@ export function ProductPurchasePanel({
                     isColorOutOfStock ? " (out of stock)" : ""
                   }`}
                   style={{ backgroundColor: color.hexValue }}
-                  className="relative size-14 rounded-md outline-1 outline-offset-[-1px] outline-gray-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="relative size-14 rounded-md outline-1 -outline-offset-1 outline-gray-200 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {isSelected && !isColorOutOfStock && (
-                    <svg
-                      viewBox="0 0 16 10"
-                      fill="none"
-                      className="absolute inset-0 m-auto size-4"
-                    >
-                      <path
-                        d="M1 5l4.5 4L15 1"
-                        stroke={getContrastColor(color.hexValue)}
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                    <ApproveIcon
+                      className={`absolute inset-0 m-auto size-4 {getContrastColor(color.hexValue)}`}
+                    />
                   )}
                 </button>
               );
@@ -146,7 +131,7 @@ export function ProductPurchasePanel({
           Quantity
         </div>
         <div className="self-stretch flex justify-start items-center gap-4">
-          <div className="flex-1 px-5 py-3.5 rounded-md outline-1 outline-offset-[-1px] outline-neutral-900 flex justify-center items-center gap-3.5">
+          <div className="flex-1 px-5 py-3.5 rounded-md outline-1 -outline-offset-1 outline-neutral-900 flex justify-center items-center gap-3.5">
             <button
               type="button"
               onClick={decrease}
@@ -154,9 +139,7 @@ export function ProductPurchasePanel({
               aria-label="Decrease quantity"
               className="text-neutral-900 disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              <svg viewBox="0 0 16 2" fill="none" className="size-4">
-                <path d="M0 1h16" stroke="currentColor" strokeWidth="1.5" />
-              </svg>
+              <MinusIcon className="size-4" />
             </button>
             <span className="text-neutral-900 text-base font-medium leading-6">
               {quantity}
@@ -168,13 +151,7 @@ export function ProductPurchasePanel({
               aria-label="Increase quantity"
               className="text-neutral-900 disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              <svg viewBox="0 0 16 16" fill="none" className="size-4">
-                <path
-                  d="M8 0v16M0 8h16"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                />
-              </svg>
+              <PlusIcon className="size-4" />
             </button>
           </div>
           <span className="text-neutral-900 text-base font-medium leading-6">
@@ -192,23 +169,14 @@ export function ProductPurchasePanel({
         </div>
       </div>
 
-      <div className="self-stretch flex flex-col justify-start items-start gap-4">
-        <button
-          type="button"
-          onClick={handleAddToCart}
-          disabled={isAdding || isOutOfStock}
-          className="self-stretch px-5 py-3.5 rounded-md outline-1 outline-offset-[-1px] outline-primary-500 flex justify-center items-center gap-3.5 hover:bg-primary-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <span className="text-primary-500 text-base font-medium leading-6">
-            {isOutOfStock
-              ? "Out of stock"
-              : isAdding
-                ? "Adding..."
-                : "Add to Cart"}
-          </span>
-          {!isOutOfStock && <CartIcon className="size-5 text-primary-500" />}
-        </button>
-      </div>
+      <Button
+        variant="outline"
+        onClick={handleAddToCart}
+        disabled={isAdding || isOutOfStock}
+        icon={!isOutOfStock && <CartIcon className="size-5 text-primary-500" />}
+      >
+        {isOutOfStock ? "Out of stock" : isAdding ? "Adding..." : "Add to Cart"}
+      </Button>
     </div>
   );
 }

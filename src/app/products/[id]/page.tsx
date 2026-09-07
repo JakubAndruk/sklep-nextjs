@@ -5,6 +5,7 @@ import { ProductGallery } from "@/components/products/ProductGallery";
 import { ExpandableDescription } from "@/components/products/ExpandableDescription";
 import { ShippingInfo } from "@/components/products/ShippingInfo";
 import { ProductPurchasePanel } from "@/components/products/ProductPurchasePanel";
+import { ProductCaregoryBadge } from "@/components/ui/ProductCategoryBadge";
 
 type ProductDetailsPageProps = {
   params: Promise<{ id: string }>;
@@ -30,9 +31,9 @@ export default async function ProductDetailsPage({
     <div className="w-full flex flex-col justify-start items-start gap-2">
       <Breadcrumb items={breadcrumbItems} />
 
-      <div className="w-full p-10 flex justify-start items-start gap-8">
-        <div className="flex-1 flex flex-col justify-start items-end gap-12">
-          <div className="self-stretch flex justify-start items-start gap-10">
+      <div className="w-full px-2 xxs:px-10 py-10 flex flex-wrap justify-start items-start gap-8">
+        <div className="flex-1 flex flex-col  justify-start items-end gap-12">
+          <div className="self-stretch flex flex-wrap justify-start items-start gap-10">
             <ProductGallery
               imageUrl={product.imageUrl}
               images={product.images}
@@ -44,13 +45,7 @@ export default async function ProductDetailsPage({
                 <div className="self-stretch text-neutral-900 text-3xl font-medium leading-10">
                   {product.name}
                 </div>
-                <div className="flex justify-start items-start gap-2.5 flex-wrap content-start">
-                  <div className="px-2.5 py-1.5 bg-orange-50 rounded-md flex justify-center items-center gap-2.5">
-                    <div className="text-primary-800 text-sm font-medium leading-6">
-                      {product.category.name}
-                    </div>
-                  </div>
-                </div>
+                <ProductCaregoryBadge name={product.category.name} />
               </div>
 
               <div className="text-neutral-900 text-3xl font-medium leading-10">

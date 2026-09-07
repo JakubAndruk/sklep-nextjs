@@ -1,6 +1,6 @@
 import { UserPublic } from "@/types/user";
 import { RegisterInput } from "../validators/auth";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import prisma from "./prisma";
 import { Prisma } from "@/generated/prisma/client";
 

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { RevealRow } from "@/components/ui/RevealRow";
 import Image from "next/image";
 
@@ -16,17 +15,13 @@ export function BrandGrid({ brands }: BrandGridProps) {
   if (brands.length === 0) return null;
 
   return (
-    <div className="self-stretch flex flex-col justify-start items-start gap-8">
-      <div className="text-neutral-900 text-3xl font-medium leading-10">
-        Brand
-      </div>
-
-      <RevealRow>
+    <div className="self-stretch flex flex-col justify-start items-start">
+      <RevealRow name="Brand">
         {brands.map((brand) => (
           <div
             key={brand.id}
             draggable={false}
-            className="w-56 h-48 p-3 shrink-0 bg-base-white rounded-md outline-1 outline-offset-[-1px] outline-gray-400 flex flex-col justify-center items-center gap-7 hover:outline-primary-500 transition-colors"
+            className="w-56 h-48 p-3 shrink-0 bg-base-white rounded-md outline-1 -outline-offset-1 outline-gray-400 flex flex-col justify-center items-center gap-7 hover:outline-primary-500 transition-colors"
           >
             <Image
               width={80}

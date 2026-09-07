@@ -1,5 +1,7 @@
 "use client";
 
+import { ChevronRightIcon } from "../icons/ChevronRightIcon";
+
 type PaginationProps = {
   page: number;
   totalPages: number;
@@ -39,7 +41,7 @@ export function Pagination({
   const items = getPageItems(page, totalPages);
 
   return (
-    <div className="self-stretch flex justify-between items-center">
+    <div className="self-stretch flex flex-wrap justify-between items-center">
       <div className="flex justify-start items-center gap-2">
         {items.map((item, index) =>
           item === "..." ? (
@@ -77,21 +79,10 @@ export function Pagination({
           type="button"
           disabled={page <= 1}
           onClick={() => onPageChange(page - 1)}
-          className="px-5 py-2.5 rounded-md outline-1 outline-offset-[-1px] outline-neutral-900 flex justify-center items-center gap-3.5 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+          className="px-5 py-2.5 rounded-md outline-1 -outline-offset-1 outline-neutral-900 flex justify-center items-center gap-3.5 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
         >
-          <svg
-            viewBox="0 0 14 10"
-            fill="none"
-            className="size-5 text-neutral-900"
-          >
-            <path
-              d="M6 1L1 5l5 4M1 5h12"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <ChevronRightIcon className="size-5 text-neutral-900 rotate-180" />
+
           <span className="text-neutral-900 text-sm font-medium leading-6">
             Previous
           </span>
@@ -101,24 +92,12 @@ export function Pagination({
           type="button"
           disabled={page >= totalPages}
           onClick={() => onPageChange(page + 1)}
-          className="px-5 py-2.5 rounded-md outline-1 outline-offset-[-1px] outline-neutral-900 flex justify-center items-center gap-3.5 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+          className="px-5 py-2.5 rounded-md outline-1 -outline-offset-1 outline-neutral-900 flex justify-center items-center gap-3.5 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
         >
           <span className="text-neutral-900 text-sm font-medium leading-6">
             Next
           </span>
-          <svg
-            viewBox="0 0 14 10"
-            fill="none"
-            className="size-5 text-neutral-900"
-          >
-            <path
-              d="M8 1l5 4-5 4M13 5H1"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <ChevronRightIcon className="size-5 text-neutral-900 " />
         </button>
       </div>
     </div>

@@ -1,35 +1,17 @@
 import Link from "next/link";
+import { CheckmarkBadge } from "../icons/CheckmarkBadge";
 
 export default function RegisterSuccess() {
   return (
     <div className="self-stretch p-6 flex flex-col justify-start items-center gap-10">
       <div className="size-24 relative flex items-center justify-center">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          className="size-20 text-success-600"
-        >
-          <circle
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="1.6"
-          />
-          <path
-            d="M8 12.5l2.5 2.5L16 9.5"
-            stroke="currentColor"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <CheckmarkBadge className="size-20 text-success-600" />
       </div>
 
       <div className="self-stretch flex flex-col justify-start items-center gap-14">
         <div className="self-stretch flex flex-col justify-start items-center gap-8">
           <div className="self-stretch flex flex-col justify-start items-center gap-4">
-            <div className="self-stretch text-center text-neutral-900 text-5xl font-bold leading-[54px]">
+            <div className="self-stretch text-center text-neutral-900 text-5xl font-bold leading-13.5">
               Thank you!
             </div>
             <div className="self-stretch text-center text-neutral-900 text-2xl font-medium leading-9">

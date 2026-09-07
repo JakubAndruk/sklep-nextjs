@@ -1,7 +1,13 @@
+import { ApplePayIcon } from "@/components/icons/payment/ApplePayIcon";
+import { GooglePayIcon } from "@/components/icons/payment/GooglePayIcon";
+import { MastercardIcon } from "@/components/icons/payment/MastercardIcon";
+import { PayPalIcon } from "@/components/icons/payment/PayPalIcon";
+import { VisaIcon } from "@/components/icons/payment/VisaIcon";
+
 export const paymentMethods = [
-  { name: "Visa", src: "/icons/payment/visa.svg" },
-  { name: "Mastercard", src: "/icons/payment/mastercard.svg" },
-  { name: "PayPal", src: "/icons/payment/paypal.svg" },
-  { name: "Apple Pay", src: "/icons/payment/applepay.svg" },
-  { name: "Google Pay", src: "/icons/payment/googlepay.svg" },
+  { name: "Visa", Icon: VisaIcon },
+  { name: "Mastercard", Icon: MastercardIcon },
+  { name: "PayPal", Icon: PayPalIcon },
+  { name: "Apple Pay", Icon: ApplePayIcon },
+  { name: "Google Pay", Icon: GooglePayIcon },
 ];

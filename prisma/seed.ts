@@ -1,11 +1,19 @@
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
 
-const PLACEHOLDER_IMAGE = "https://i.ibb.co/FdYHxt0/rexus-xierra-x16.png";
+if (
+  process.env.NODE_ENV === "production" &&
+  process.env.ALLOW_PROD_SEED !== "true"
+) {
+  throw new Error(
+    "Seed clears orders, order items, and carts (deleteMany)." +
+      "To knowingly run the seed in production, set the ALLOW_PROD_SEED=true environment variable.",
+  );
+}
 
 type ProductColorInput = {
   name: string;
@@ -28,6 +36,7 @@ const categories = [
     slug: "mouse",
     description: "Computer mice for work, productivity and competitive gaming.",
     exploreInfo: "Discover our mice",
+    imageUrl: "https://i.ibb.co/Q3VzTRcG/mouse.png",
   },
   {
     name: "Monitor",
@@ -35,24 +44,28 @@ const categories = [
     description:
       "Monitors for gaming, creative work and everyday productivity.",
     exploreInfo: "Discover our monitors",
+    imageUrl: "https://i.ibb.co/1fn16YcP/monitor.png",
   },
   {
     name: "Headphone",
     slug: "headphone",
     description: "Wired and wireless headphones for music, calls and gaming.",
     exploreInfo: "Discover our headphones",
+    imageUrl: "https://i.ibb.co/kVcHmyJL/headphone.png",
   },
   {
     name: "Keyboard",
     slug: "keyboard",
     description: "Mechanical and membrane keyboards for typing and gaming.",
     exploreInfo: "Discover our keyboards",
+    imageUrl: "https://i.ibb.co/DDRq6wpy/keyboard.png",
   },
   {
     name: "Webcam",
     slug: "webcam",
     description: "Webcams for video calls, streaming and hybrid work.",
     exploreInfo: "Discover our webcams",
+    imageUrl: "https://i.ibb.co/JWw54C0V/webcam.png",
   },
 ];
 
@@ -524,14 +537,14 @@ async function main() {
         update: {
           name: cat.name,
           description: cat.description,
-          image: PLACEHOLDER_IMAGE,
+          image: cat.imageUrl,
           exploreInfo: cat.exploreInfo,
         },
         create: {
           name: cat.name,
           slug: cat.slug,
           description: cat.description,
-          image: PLACEHOLDER_IMAGE,
+          image: cat.imageUrl,
           exploreInfo: cat.exploreInfo,
         },
       }),
@@ -550,6 +563,7 @@ async function main() {
   );
 
   // Czyścimy zależne dane – tylko na dev/test!
+  // Na produkcji ta ścieżka jest osiągalna wyłącznie po jawnym ustawieniu ALLOW_PROD_SEED=true (patrz guard na górze pliku).
   console.log("Seeding: cleaning data...");
   await prisma.orderItem.deleteMany();
   await prisma.order.deleteMany();

@@ -135,6 +135,7 @@ model CartItem {
   color ProductColor? @relation(fields: [colorId], references: [id])
   quantity Int @default(1)
   note String?
+  productProtectionSelected Boolean @default(true)
 
   @@unique([cartId, productId, colorId])
   @@index([productId])
@@ -148,7 +149,6 @@ model Order {
   status OrderStatus @default(PENDING)
   productsAmount Decimal @db.Decimal(10, 2)
   productProtection Decimal @db.Decimal(10, 2)
-  productProtectionSelected Boolean @default(true)
   shippingPrice Decimal @db.Decimal(10, 2)
   shippingInsurance Decimal @db.Decimal(10, 2)
   serviceFee Decimal @db.Decimal(10, 2)
@@ -175,6 +175,7 @@ model OrderItem {
   color ProductColor? @relation(fields: [colorId], references: [id])
   quantity Int
   priceAtPurchase Decimal @db.Decimal(10, 2)
+  productProtectionSelected Boolean @default(true)
 
   @@index([orderId])
   @@index([productId])
