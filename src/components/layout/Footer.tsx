@@ -110,7 +110,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="flex flex-wrap justify-end items-start gap-8">
+      <div className="flex flex-wrap justify-start items-start gap-8">
         {footerSections.map((section) => (
           <FooterColumn key={section.title} {...section} />
         ))}
