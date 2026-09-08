@@ -32,7 +32,7 @@ export async function getProducts(
   const where: Prisma.ProductWhereInput = {};
 
   if (category) {
-    where.category = { slug: category };
+    where.category = { slug: { in: category } };
   }
 
   if (minPrice !== undefined || maxPrice !== undefined) {

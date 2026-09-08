@@ -3,8 +3,20 @@ import { z } from "zod";
 export const sortOptions = ["newest", "price_asc", "price_desc"] as const;
 export type SortOption = (typeof sortOptions)[number];
 
+const categoryListSchema = z
+  .string()
+  .optional()
+  .transform((value) =>
+    value
+      ? value
+          .split(",")
+          .map((slug) => slug.trim())
+          .filter(Boolean)
+      : undefined,
+  );
+
 export const productQuerySchema = z.object({
-  category: z.string().optional(),
+  category: categoryListSchema,
 
   minPrice: z.coerce
     .number()

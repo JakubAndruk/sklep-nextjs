@@ -16,12 +16,12 @@ export function RevealRow({ children, name }: RevealRowProps) {
 
   return (
     <div className="self-stretch flex flex-col justify-start items-start min-w-0 gap-8 ">
-      <div className="self-stretch flex justify-between">
+      <div className="self-stretch flex flex-wrap justify-between">
         <div className="text-neutral-900 text-3xl font-medium leading-10">
           {name}
         </div>
         {hasOverflow && (
-          <div className="self-end flex justify-center items-center gap-3.5">
+          <div className="self-end flex justify-center items-center gap-3.5 ml-auto">
             <button
               type="button"
               onClick={() => scrollByStep("prev")}
@@ -50,7 +50,7 @@ export function RevealRow({ children, name }: RevealRowProps) {
 
       <div
         ref={ref}
-        className="self-stretch flex flex-nowrap justify-start items-start gap-8 overflow-x-auto pb-2 px-10 min-w-0 scrollbar-none [&::-webkit-scrollbar]:hidden"
+        className="self-stretch flex flex-nowrap justify-start items-start gap-8 overflow-x-auto pb-2 px-2 xs:px-10 min-w-0 scrollbar-none [&::-webkit-scrollbar]:hidden"
       >
         {children}
       </div>

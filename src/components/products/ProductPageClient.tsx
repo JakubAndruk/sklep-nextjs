@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { use, useCallback } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import {
   ProductCard,
@@ -39,7 +39,11 @@ export function ProductsPageClient({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const category = searchParams.get("category");
+  const categoryParam = searchParams.get("category");
+
+  const activeCategorySlugs = categoryParam
+    ? categoryParam.split(",").filter(Boolean)
+    : [];
   const minPrice = searchParams.get("minPrice") ?? "";
   const maxPrice = searchParams.get("maxPrice") ?? "";
   const sort = searchParams.get("sort") ?? "newest";
@@ -63,13 +67,20 @@ export function ProductsPageClient({
     [searchParams, router, pathname],
   );
 
+  const handleCategoryChange = useCallback(
+    (slugs: string[]) => {
+      updateParams({ category: slugs.length > 0 ? slugs.join(",") : null });
+    },
+    [updateParams],
+  );
+
   return (
     <div className="w-full flex flex-wrap justify-start items-start gap-0.5">
       <aside className="max-w-96 min-w-50 p-2 xs:p-10 flex flex-col flex-wrap justify-start items-center gap-12 shrink-0 md:sticky md:top-0 md:self-start">
         <CategoryFilter
           categories={categories}
-          activeSlug={category}
-          onChange={(slug) => updateParams({ category: slug })}
+          activeSlugs={activeCategorySlugs}
+          onChange={handleCategoryChange}
         />
 
         <PriceFilter

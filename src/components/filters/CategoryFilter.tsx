@@ -12,8 +12,8 @@ type Category = {
 
 type CategoryFilterProps = {
   categories: Category[];
-  activeSlug: string | null;
-  onChange: (slug: string | null) => void;
+  activeSlugs: string[];
+  onChange: (slug: string[]) => void;
 };
 
 const VISIBLE_COUNT = 4;
@@ -49,7 +49,7 @@ function CheckboxRow({
 
 export function CategoryFilter({
   categories,
-  activeSlug,
+  activeSlugs,
   onChange,
 }: CategoryFilterProps) {
   const [expanded, setExpanded] = useState(false);
@@ -59,6 +59,16 @@ export function CategoryFilter({
     ? categories
     : categories.slice(0, VISIBLE_COUNT);
   const hasMore = categories.length > VISIBLE_COUNT;
+
+  const isAllSelected = activeSlugs.length === 0;
+
+  const handleToggleCategory = (slug: string) => {
+    const isSelected = activeSlugs.includes(slug);
+    const next = isSelected
+      ? activeSlugs.filter((s) => s !== slug)
+      : [...activeSlugs, slug];
+    onChange(next);
+  };
 
   return (
     <div className="self-stretch px-2.5 flex flex-col justify-start items-start gap-4">
@@ -79,15 +89,15 @@ export function CategoryFilter({
         <div className="self-stretch px-2 flex flex-col justify-start items-start gap-5">
           <CheckboxRow
             label="All"
-            checked={activeSlug === null}
-            onClick={() => onChange(null)}
+            checked={isAllSelected}
+            onClick={() => onChange([])}
           />
           {visibleCategories.map((category) => (
             <CheckboxRow
               key={category.id}
               label={category.name}
-              checked={activeSlug === category.slug}
-              onClick={() => onChange(category.slug)}
+              checked={activeSlugs.includes(category.slug)}
+              onClick={() => handleToggleCategory(category.slug)}
             />
           ))}
 
@@ -101,7 +111,7 @@ export function CategoryFilter({
                 Load More
               </span>
               <ChevronDownIcon
-                className={`size-4 text-neutral-900 transition-transform ${open ? "rotate-180" : ""}`}
+                className={`size-4 text-neutral-900 transition-transform ${open ? "" : "rotate-180"}`}
               />
             </button>
           )}
