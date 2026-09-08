@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
@@ -9,13 +9,8 @@ import Main from "@/components/layout/Main";
 import { NotificationProvider } from "@/context/NotificationContext";
 import { NotificationStack } from "@/components/ui/Notification";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -28,7 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scrollbar-gutter-stable`}
+      className={`${inter.variable} h-full antialiased scrollbar-gutter-stable`}
     >
       <body className="flex flex-col w-full max-w-360 mx-auto items-center justify-center">
         <SessionProvider>
