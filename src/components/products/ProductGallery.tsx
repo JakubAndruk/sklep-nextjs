@@ -23,7 +23,7 @@ export function ProductGallery({
 
   return (
     <div className="flex flex-col justify-start items-start gap-8">
-      <div className="w-[clamp(280px,90vw,422px)] h-[296px] p-3 bg-base-white rounded-md outline-1 outline-offset-[-1px] outline-gray-200 flex flex-col justify-start items-start gap-2.5">
+      <div className="w-[clamp(280px,90vw,422px)] h-74 p-3 bg-base-white rounded-md outline-1 -outline-offset-1 outline-gray-200 flex flex-col justify-start items-start gap-2.5">
         <Image
           width={360}
           height={296}

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Logo } from "@/components/ui/Logo";
@@ -9,6 +8,7 @@ import { NavLink } from "@/components/ui/NavLink";
 import { useCart } from "@/context/CartContext";
 import { CartIcon } from "@/components/icons/CartIcon";
 import { UserAvatar } from "../ui/UserAvatar";
+import { ErrorCircleIcon } from "../icons/ErrorCircleIcon";
 
 function Nav() {
   const pathname = usePathname();
@@ -44,7 +44,7 @@ export default function Header() {
             <>
               <Link
                 href="/cart"
-                aria-label="Koszyk"
+                aria-label="Cart"
                 className="relative p-2 rounded-full hover:bg-primary-500 transition-colors"
               >
                 <CartIcon className="size-6 text-neutral-900" />
@@ -57,25 +57,20 @@ export default function Header() {
 
               <Link
                 href="/profile"
-                aria-label="Profil użytkownika"
+                aria-label="User profile"
                 className="hover:opacity-90 transition-opacity"
               >
                 {userEmail ? (
                   <UserAvatar email={userEmail} size="sm" />
                 ) : (
-                  <Image
-                    className="size-10 rounded-full border border-neutral-200 object-cover"
-                    src="/icons/globe.svg"
-                    alt="Avatar użytkownika"
-                    width={40}
-                    height={40}
-                  />
+                  <ErrorCircleIcon className="size-10 rounded-full border object-cover" />
                 )}
               </Link>
             </>
           ) : (
             <Link
               href="/login"
+              aria-label="Login"
               className="px-6 py-2.5 bg-primary-500 text-base-white text-base font-medium rounded-lg hover:bg-primary-600 transition-colors"
             >
               Sign In

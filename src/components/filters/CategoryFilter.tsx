@@ -13,7 +13,7 @@ type Category = {
 type CategoryFilterProps = {
   categories: Category[];
   activeSlugs: string[];
-  onChange: (slug: string[]) => void;
+  onChange: (slugs: string[]) => void;
 };
 
 const VISIBLE_COUNT = 4;

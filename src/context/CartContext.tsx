@@ -98,6 +98,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const addItem = useCallback(
     async (productId: string, quantity = 1, colorId?: string | null) => {
+      if (!isAuthenticated) return;
+
       setError(null);
       try {
         const updatedCart = await addToCartApi(productId, quantity, colorId);
@@ -111,7 +113,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         throw new Error(message);
       }
     },
-    [showNotification],
+    [showNotification, isAuthenticated],
   );
 
   const updateItemQuantity = useCallback(

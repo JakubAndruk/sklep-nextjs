@@ -45,7 +45,7 @@ export function CategoryGrid({ categories }: CategoryGridProps) {
             <Link
               key={category.id}
               href={`/products?category=${category.slug}`}
-              className="w-55.5 h-48 p-3 bg-base-white rounded-md outline-1 outline-offset-[-1px] outline-gray-400 flex flex-col justify-center items-center gap-6 hover:outline-primary-500 transition-colors"
+              className="w-55.5 h-48 p-3 bg-base-white rounded-md outline-1 -outline-offset-1 outline-gray-400 flex flex-col justify-center items-center gap-6 hover:outline-primary-500 transition-colors"
             >
               <Icon className="size-20 text-primary-500" />
               <div className="text-neutral-900 text-xl font-medium leading-8">

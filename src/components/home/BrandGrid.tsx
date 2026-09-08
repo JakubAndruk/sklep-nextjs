@@ -20,7 +20,6 @@ export function BrandGrid({ brands }: BrandGridProps) {
         {brands.map((brand) => (
           <div
             key={brand.id}
-            draggable={false}
             className="w-56 h-48 p-3 shrink-0 bg-base-white rounded-md outline-1 -outline-offset-1 outline-gray-400 flex flex-col justify-center items-center gap-7 hover:outline-primary-500 transition-colors"
           >
             <Image

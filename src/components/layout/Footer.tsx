@@ -68,6 +68,7 @@ function FooterColumn({ title, links }: FooterSection) {
             <Link
               key={label}
               href={href}
+              aria-label={label}
               target="_blank"
               rel="noopener noreferrer"
               className={InactiveClassName}
@@ -75,7 +76,12 @@ function FooterColumn({ title, links }: FooterSection) {
               {label}
             </Link>
           ) : (
-            <Link key={label} href={href} className={InactiveClassName}>
+            <Link
+              key={label}
+              href={href}
+              aria-label={label}
+              className={InactiveClassName}
+            >
               {label}
             </Link>
           ),

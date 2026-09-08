@@ -47,16 +47,6 @@ export function HeroSection({ categories }: HeroSectionProps) {
           >
             Explore Category
           </LinkButton>
-
-          {/* <Link
-            href={`/products?category=${active.slug}`}
-            className="px-5 py-3.5 rounded-md outline-1 outline-offset-[-1px] outline-primary-500 inline-flex justify-center items-center gap-3.5 hover:bg-primary-50 transition-colors"
-          >
-            <span className="text-primary-500 text-base font-medium leading-6">
-              Explore Category
-            </span>
-            <ChevronRightIcon className="size-4 text-primary-500" />
-          </Link> */}
         </div>
 
         <Image

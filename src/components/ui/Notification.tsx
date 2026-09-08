@@ -79,7 +79,7 @@ function NotificationItem({ notification }: { notification: Notification }) {
       <button
         type="button"
         onClick={() => dismissNotification(notification.id)}
-        aria-label="Zamknij powiadomienie"
+        aria-label="Close notification"
         className="size-7 relative shrink-0 text-neutral-900 hover:opacity-70 transition-opacity"
       >
         <CloseIcon className="size-4 absolute left-[6.25px] top-[6.25px]" />

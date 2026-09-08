@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useCallback } from "react";
+import { useCallback } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import {
   ProductCard,

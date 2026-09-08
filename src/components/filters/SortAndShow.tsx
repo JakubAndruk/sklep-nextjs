@@ -1,17 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
 import { Select } from "../ui/Select";
 
 type Option = { value: string; label: string };
-
-type DropdownProps = {
-  label: string;
-  value: string;
-  options: Option[];
-  onChange: (value: string) => void;
-  widthClass?: string;
-};
 
 const SORT_OPTIONS: Option[] = [
   { value: "newest", label: "Latest" },
