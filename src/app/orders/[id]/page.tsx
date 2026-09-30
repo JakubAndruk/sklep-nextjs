@@ -34,7 +34,7 @@ export default async function OrderConfirmationPage({
   return (
     <div className="w-full flex flex-col justify-start items-center gap-2">
       <Breadcrumb items={breadcrumbItems} />
-      <div className="w-full flex justify-center items-start p-10">
+      <div className="w-full flex justify-center items-start p-2 xs:p-10">
         <OrderSummaryCard order={order} />
       </div>
     </div>

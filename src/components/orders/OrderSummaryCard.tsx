@@ -63,7 +63,7 @@ export function OrderSummaryCard({ order }: OrderSummaryCardProps) {
   );
 
   return (
-    <div className="w-full max-w-160 p-6 bg-base-white rounded-md outline-1 -outline-offset-1 outline-gray-200 flex flex-col justify-center items-center gap-6">
+    <div className="w-full max-w-160 p-2 xs:p-6 bg-base-white rounded-md outline-1 -outline-offset-1 outline-gray-200 flex flex-col justify-center items-center gap-6">
       <div className="flex flex-col justify-start items-center gap-6">
         <CheckmarkBadge className="size-15 text-success-500 m-2.5" />
         <div className="text-center text-neutral-900 text-3xl font-medium leading-10">
@@ -122,7 +122,7 @@ export function OrderSummaryCard({ order }: OrderSummaryCardProps) {
                 key={item.id}
                 className="self-stretch p-4 bg-base-white rounded-md outline-1 -outline-offset-1 outline-gray-200 flex flex-col justify-center items-start gap-4"
               >
-                <div className="self-stretch flex justify-start items-center gap-8">
+                <div className="self-stretch flex flex-wrap justify-start items-center gap-8">
                   <div className="w-44 h-36 p-3 rounded-md outline-1 -outline-offset-1 outline-gray-200 flex flex-col justify-start items-start gap-2.5">
                     <Image
                       width={176}
