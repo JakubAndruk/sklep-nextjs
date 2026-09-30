@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ChevronRightIcon } from "@/components/icons/ChevronRightIcon";
 import { ChevronDownIcon } from "../icons/ChevronDownIcon";
 
 export type BreadcrumbItem = {
